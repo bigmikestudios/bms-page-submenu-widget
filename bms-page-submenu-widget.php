@@ -66,6 +66,9 @@ class Bms_Page_Submenu_Widget extends WP_Widget {
 			);
 			$subpage_list = wp_nav_menu($args);
 	
+			// apply variables
+			$title = str_replace($title, '@@title@@', get_the_title($menu_parent_id));
+			
 			if ($subpage_list) {
 				echo $before_widget;
 				if ( ! empty( $title ) )
