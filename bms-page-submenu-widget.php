@@ -46,6 +46,8 @@ class Bms_Page_Submenu_Widget extends WP_Widget {
 		extract( $args );
 		$title = apply_filters( 'widget_title', $instance['title'] );
 		
+			
+		
 		// which parent should I get a menu for?
 		$menu_parent_id = 0;
 		if ($post->post_parent) {
@@ -67,7 +69,7 @@ class Bms_Page_Submenu_Widget extends WP_Widget {
 			$subpage_list = wp_nav_menu($args);
 	
 			// apply variables
-			$title = str_replace($title, '@@title@@', get_the_title($menu_parent_id));
+			$title = str_replace('@@title@@', get_the_title($menu_parent_id), $title);
 			
 			if ($subpage_list) {
 				echo $before_widget;
@@ -114,19 +116,11 @@ class Bms_Page_Submenu_Widget extends WP_Widget {
 		else {
 			$title = __( 'New title', 'text_domain' );
 		}
-		if ( isset( $instance[ 'taxonomy' ] ) ) {
-			$taxonomy = $instance[ 'taxonomy' ];
-		}
-		else {
-			$taxonomy = __( 'Enter taxonomy slug here', 'text_domain' );
-		}
 		
 		?>
 		<p>
 		<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label> 
-		<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
-        <label for="<?php echo $this->get_field_id( 'taxonomy' ); ?>"><?php _e( 'Taxonomy:' ); ?></label> 
-		<input class="widefat" id="<?php echo $this->get_field_id( 'taxonomy' ); ?>" name="<?php echo $this->get_field_name( 'taxonomy' ); ?>" type="text" value="<?php echo esc_attr( $taxonomy ); ?>" />
+		<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" /><br /><small>Use <em>@@title@@</em> to include the title of the parent page</small>
 		</p>
 		<?php 
 	}
